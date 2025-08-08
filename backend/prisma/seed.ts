@@ -15,7 +15,7 @@ async function main() {
     where: { email: "admin@ecommerce.com" },
     update: {},
     create: {
-      id: "550e8400-e29b-41d4-a716-446655440001",
+      id: 1,
       email: "admin@ecommerce.com",
       password: hashedPassword,
       firstName: "Admin",
@@ -30,7 +30,7 @@ async function main() {
     where: { email: "user@ecommerce.com" },
     update: {},
     create: {
-      id: "550e8400-e29b-41d4-a716-446655440002",
+      id: 2,
       email: "user@ecommerce.com",
       password: hashedPassword,
       firstName: "Regular",
@@ -45,7 +45,7 @@ async function main() {
     where: { email: "test@ecommerce.com" },
     update: {},
     create: {
-      id: "550e8400-e29b-41d4-a716-446655440003",
+      id: 3,
       email: "test@ecommerce.com",
       password: hashedPassword,
       firstName: "Test",
@@ -62,7 +62,7 @@ async function main() {
       where: { sku: "IPHONE-15-PRO-001" },
       update: {},
       create: {
-        id: "550e8400-e29b-41d4-a716-446655440101",
+        id: 1,
         name: "iPhone 15 Pro",
         description:
           "El último iPhone con características avanzadas de cámara y rendimiento excepcional.",
@@ -84,7 +84,7 @@ async function main() {
       where: { sku: "MACBOOK-AIR-M2-001" },
       update: {},
       create: {
-        id: "550e8400-e29b-41d4-a716-446655440102",
+        id: 2,
         name: "MacBook Air M2",
         description:
           "Laptop ultraligera con chip M2 para máxima eficiencia y rendimiento.",
@@ -106,7 +106,7 @@ async function main() {
       where: { sku: "SAMSUNG-S24-001" },
       update: {},
       create: {
-        id: "550e8400-e29b-41d4-a716-446655440103",
+        id: 3,
         name: "Samsung Galaxy S24",
         description: "Flagship Android con IA integrada y cámara profesional.",
         price: 899.99,
@@ -127,7 +127,7 @@ async function main() {
       where: { sku: "SONY-WH1000XM5-001" },
       update: {},
       create: {
-        id: "550e8400-e29b-41d4-a716-446655440104",
+        id: 4,
         name: "Sony WH-1000XM5",
         description:
           "Auriculares inalámbricos con cancelación de ruido líder en la industria.",
@@ -149,7 +149,7 @@ async function main() {
       where: { sku: "NIKE-AIRMAX-270-001" },
       update: {},
       create: {
-        id: "550e8400-e29b-41d4-a716-446655440105",
+        id: 5,
         name: "Nike Air Max 270",
         description:
           "Zapatillas deportivas con tecnología Air Max para máxima comodidad.",

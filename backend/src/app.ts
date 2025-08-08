@@ -11,6 +11,15 @@ dotenv.config();
 
 // Importaciones de configuración
 import { PrismaClient } from "@prisma/client";
+import apiRoutes from "./routes";
+
+// Inicializar Prisma Client
+const prisma = new PrismaClient({
+  log:
+    process.env.NODE_ENV === "development"
+      ? ["query", "info", "warn", "error"]
+      : ["warn", "error"],
+});
 
 // Crear aplicación Express
 const app = express();
@@ -31,12 +40,19 @@ app.use(
 );
 
 // Middleware de CORS
+const corsOrigins =
+  process.env.NODE_ENV === "production"
+    ? process.env.CORS_ORIGINS_PROD?.split(",") || ["https://yourdomain.com"]
+    : process.env.CORS_ORIGINS_DEV?.split(",") || [
+        "http://localhost:4200",
+        "http://localhost:3000",
+      ];
+
+console.log(`🌐 CORS configurado para: ${corsOrigins.join(", ")}`);
+
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? ["https://yourdomain.com"]
-        : ["http://localhost:4200", "http://localhost:3000"],
+    origin: corsOrigins,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
@@ -78,6 +94,9 @@ app.get("/health", (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Rutas de la API
+app.use("/api", apiRoutes);
 
 // Ruta de prueba para verificar Prisma
 app.get("/api/test", async (req, res) => {
@@ -126,9 +145,6 @@ app.use("*", (req, res) => {
   });
 });
 
-// Inicializar Prisma Client
-const prisma = new PrismaClient();
-
 // Función para iniciar el servidor
 const startServer = async () => {
   try {
@@ -149,13 +165,15 @@ const startServer = async () => {
 };
 
 // Manejo de señales para cierre graceful
-process.on("SIGTERM", () => {
+process.on("SIGTERM", async () => {
   console.log("SIGTERM recibido, cerrando servidor...");
+  await prisma.$disconnect();
   process.exit(0);
 });
 
-process.on("SIGINT", () => {
+process.on("SIGINT", async () => {
   console.log("SIGINT recibido, cerrando servidor...");
+  await prisma.$disconnect();
   process.exit(0);
 });
 
