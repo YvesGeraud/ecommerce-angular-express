@@ -48,7 +48,7 @@ export class ProductService {
   /**
    * Obtener producto por ID
    */
-  async getProductById(id: string): Promise<ProductResponse | null> {
+  async getProductById(id: number): Promise<ProductResponse | null> {
     const product = await prisma.product.findUnique({
       where: { id },
     });
@@ -207,7 +207,7 @@ export class ProductService {
    * Actualizar producto
    */
   async updateProduct(
-    id: string,
+    id: number,
     productData: UpdateProductDto
   ): Promise<ProductResponse> {
     // Verificar si el producto existe
@@ -242,7 +242,7 @@ export class ProductService {
   /**
    * Eliminar producto (soft delete)
    */
-  async deleteProduct(id: string): Promise<void> {
+  async deleteProduct(id: number): Promise<void> {
     const existingProduct = await prisma.product.findUnique({
       where: { id },
     });
@@ -261,7 +261,7 @@ export class ProductService {
   /**
    * Actualizar stock de producto
    */
-  async updateStock(id: string, quantity: number): Promise<ProductResponse> {
+  async updateStock(id: number, quantity: number): Promise<ProductResponse> {
     const product = await prisma.product.findUnique({
       where: { id },
     });
@@ -287,7 +287,7 @@ export class ProductService {
   /**
    * Verificar disponibilidad de stock
    */
-  async checkStock(id: string, quantity: number): Promise<boolean> {
+  async checkStock(id: number, quantity: number): Promise<boolean> {
     const product = await prisma.product.findUnique({
       where: { id },
     });

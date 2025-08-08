@@ -46,7 +46,7 @@ export class UserService {
   /**
    * Obtener usuario por ID
    */
-  async getUserById(id: string): Promise<UserResponse | null> {
+  async getUserById(id: number): Promise<UserResponse | null> {
     const user = await prisma.user.findUnique({
       where: { id },
     });
@@ -128,7 +128,7 @@ export class UserService {
   /**
    * Actualizar usuario
    */
-  async updateUser(id: string, userData: UpdateUserDto): Promise<UserResponse> {
+  async updateUser(id: number, userData: UpdateUserDto): Promise<UserResponse> {
     // Verificar si el usuario existe
     const existingUser = await prisma.user.findUnique({
       where: { id },
@@ -161,7 +161,7 @@ export class UserService {
   /**
    * Eliminar usuario (soft delete)
    */
-  async deleteUser(id: string): Promise<void> {
+  async deleteUser(id: number): Promise<void> {
     const existingUser = await prisma.user.findUnique({
       where: { id },
     });
@@ -211,7 +211,7 @@ export class UserService {
    * Cambiar contraseña
    */
   async changePassword(
-    id: string,
+    id: number,
     currentPassword: string,
     newPassword: string
   ): Promise<void> {
