@@ -7,11 +7,11 @@ Proyecto de ecommerce moderno con arquitectura full-stack, diseñado para ser es
 ### Backend (Express.js + Node.js)
 
 - **Framework**: Express.js con TypeScript
-- **Base de datos**: MariaDB con Sequelize ORM
+- **Base de datos**: MariaDB con Prisma ORM
 - **Autenticación**: JWT (JSON Web Tokens)
 - **Contraseñas**: Hasheadas con bcrypt + UUID para identificadores únicos
 - **Pool de conexiones**: Configurado para optimizar rendimiento
-- **Migraciones**: Sistema automatizado para control de versiones de BD
+- **Migraciones**: Sistema automatizado con Prisma Migrate
 
 ### Frontend (Angular)
 
@@ -32,7 +32,7 @@ Proyecto de ecommerce moderno con arquitectura full-stack, diseñado para ser es
 
 ### ✅ Stack Principal (Ya definido)
 
-- **Backend**: Express.js + TypeScript + Sequelize
+- **Backend**: Express.js + TypeScript + Prisma
 - **Frontend**: Angular + Standalone Components
 - **Base de datos**: MariaDB
 - **Autenticación**: JWT + UUID + bcrypt
@@ -89,10 +89,11 @@ Proyecto de ecommerce moderno con arquitectura full-stack, diseñado para ser es
 
 #### Base de Datos & Migraciones
 
-- **Migraciones**: Sistema similar a Symfony con Sequelize CLI
-- **Seeders**: Datos de prueba automatizados
+- **Migraciones**: Sistema automatizado con Prisma Migrate
+- **Seeders**: Datos de prueba con TypeScript
+- **Studio**: Interfaz visual para explorar datos
 - **Backup**: Scripts automatizados
-- **Indices**: Optimización de consultas
+- **Indices**: Optimización automática de consultas
 
 #### Seguridad
 
@@ -151,35 +152,55 @@ ecommerce-angular-express/
 └── README.md
 ```
 
-## 🗄️ Sistema de Migraciones Recomendado
+## 🗄️ Sistema de Migraciones con Prisma
 
-Para las migraciones, recomiendo usar **Sequelize CLI** que ofrece funcionalidades similares a Symfony:
+Hemos implementado **Prisma** con funcionalidades modernas y type-safe:
 
-### Características:
+### ✅ **Características implementadas:**
 
-- **Control de versiones**: Cada migración tiene timestamp
-- **Rollback**: Posibilidad de revertir cambios
-- **Seeders**: Datos de prueba y iniciales
-- **Ambientes**: Diferentes configuraciones por entorno
+- **Schema declarativo**: Definición en `prisma/schema.prisma`
+- **TypeScript nativo**: Tipos generados automáticamente
+- **Migraciones automáticas**: Control de versiones con Prisma Migrate
+- **Studio visual**: Interfaz para explorar datos
+- **Seeders TypeScript**: Datos de prueba con tipos seguros
+- **Relaciones automáticas**: Sin código manual de foreign keys
 
-### Comandos principales:
+### 🛠️ **Comandos disponibles:**
 
 ```bash
-# Crear migración
-npx sequelize-cli migration:generate --name create-users-table
+# Migraciones
+npm run db:migrate              # Crear y aplicar migraciones
+npm run db:migrate:deploy       # Aplicar migraciones en producción
+npm run db:migrate:reset        # Resetear base de datos
+npm run db:push                 # Push directo del schema
 
-# Ejecutar migraciones
-npx sequelize-cli db:migrate
+# Seeders
+npm run db:seed                 # Ejecutar seeder TypeScript
 
-# Revertir última migración
-npx sequelize-cli db:migrate:undo
+# Herramientas
+npm run db:generate             # Regenerar cliente Prisma
+npm run db:studio               # Abrir interfaz visual
 
-# Crear seeder
-npx sequelize-cli seed:generate --name demo-users
-
-# Ejecutar seeders
-npx sequelize-cli db:seed:all
+# Comandos directos de Prisma
+npx prisma migrate dev          # Desarrollo
+npx prisma migrate deploy       # Producción
+npx prisma migrate reset        #Resetear base de datos
+npx prisma db push             # Push directo
+npx prisma studio              # Interfaz visual
+npx prisma db seed              #Ejecutar seeder
 ```
+
+### 📊 **Modelos definidos:**
+
+- **`User`**: Usuarios con autenticación JWT + bcrypt
+- **`Product`**: Productos del ecommerce con JSON fields
+- **`Order`**: Pedidos con relaciones automáticas
+- **`OrderItem`**: Items de pedidos
+
+### 🧪 **Datos de prueba incluidos:**
+
+- **3 usuarios**: admin, user, test (password: `password123`)
+- **5 productos**: iPhone, MacBook, Samsung, Sony, Nike
 
 ## 🔐 Configuración de Seguridad
 
@@ -238,8 +259,8 @@ WEBHOOK_SECRET=your_webhook_secret
 
 ### Fase 1: Base del Sistema
 
-1. **Configuración inicial del backend**: Express + TypeScript + Sequelize
-2. **Configuración de base de datos**: MariaDB + migraciones
+1. **Configuración inicial del backend**: Express + TypeScript + Prisma
+2. **Configuración de base de datos**: MariaDB + migraciones automáticas
 3. **Sistema de autenticación**: JWT + middleware de validación
 4. **API REST básica**: CRUD para productos/usuarios
 
@@ -293,6 +314,25 @@ npm install @paypal/checkout-server-sdk
 # Para generar facturas PDF
 npm install puppeteer pdfkit
 ```
+
+## 🎯 Ventajas de Prisma vs Sequelize
+
+### ✅ **Prisma (Actual)**
+
+- **Schema declarativo**: Un solo archivo `schema.prisma`
+- **TypeScript nativo**: Tipos generados automáticamente
+- **Relaciones automáticas**: Sin código manual de foreign keys
+- **Studio visual**: Interfaz para explorar datos
+- **Migraciones simples**: `npx prisma migrate dev`
+- **No sequelize-auto**: Generación automática de tipos
+
+### ❌ **Sequelize (Anterior)**
+
+- **Modelos manuales**: Archivos separados para cada modelo
+- **Validaciones manuales**: Código repetitivo en cada modelo
+- **Relaciones complejas**: Código manual para foreign keys
+- **sequelize-auto**: Herramienta externa para generar modelos
+- **Migraciones complejas**: Comandos más verbosos
 
 ## ❓ ¿Hay algo que quieras modificar o agregar?
 
